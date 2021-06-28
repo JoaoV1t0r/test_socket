@@ -23,6 +23,7 @@
 
         // Callback disparado sempre que o servidor retornar uma mensagem
         socket.addEventListener('message', function (event) {
+            console.log(event)
             response.insertAdjacentHTML('beforeend', "<p><b>Servidor diz: </b>" + event.data + "</p>");
         });
 
