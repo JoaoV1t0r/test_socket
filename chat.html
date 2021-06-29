@@ -28,9 +28,10 @@
     // Ao receber mensagens do servidor
     socket.addEventListener('message', function (event) {
       // Deserializamos o objeto
-      const data = JSON.parse(event.data);
+      //const data = JSON.parse(event);
+      console.log(JSON.parse(event.data))
       // Escrevemos no DOM
-      chat.insertAdjacentHTML('beforeend', "<p><b>" + data.nome + " diz: </b>" + data.mensagem + "</p>");
+      //chat.insertAdjacentHTML('beforeend', "<p><b>" + data.nome + " diz: </b>" + data.mensagem + "</p>");
     });
 
     // Ao enviar uma mensagem
@@ -51,7 +52,7 @@
 
     setInterval(() => {
       var settings = {
-        "url": "http://192.168.137.1:9050/api/robot/status?device_id=9762183844642&robot_id=d41243af477c",
+        "url": "http://5.183.11.4:9050/api/robot/status?device_id=9762183844642&robot_id=d41243af477c",
         "method": "GET",
         "timeout": 0,
       };
