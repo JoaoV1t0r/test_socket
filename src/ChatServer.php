@@ -26,7 +26,9 @@ final class ChatServer implements MessageComponentInterface
     $response = json_decode($msg);
     foreach ($this->clients as $client) {
       if ($response->code == 0) {
-        $client->send($msg);
+        $status = json_decode($msg);
+        $array_robot = json_encode($status->data->state);
+        $client->send($array_robot);
       } else {
         $client->send('{"status":"Disconnected"}');
       }
