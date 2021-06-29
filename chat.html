@@ -29,7 +29,7 @@
     socket.addEventListener('message', function (event) {
       // Deserializamos o objeto
       // const data = JSON.parse(event.data);
-      console.log(JSON.parse(event.data).data.state)
+      console.log(JSON.parse(event.data))
       // Escrevemos no DOM
       // chat.insertAdjacentHTML('beforeend', "<p><b>" + data.nome + " diz: </b>" + data.mensagem + "</p>");
     });
@@ -52,6 +52,8 @@
 
     setInterval(() => {
       var settings = {
+        // "url": "http://localhost:9050/api/robot/status?device_id=9762183844642&robot_id=d41243af477c",
+        // "url": "http://localhost:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=5&count=5",
         "url": "http://189.126.111.242:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=5&count=5",
         // "url": "http://5.183.11.4:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=2&count=5",
         "method": "GET",
@@ -59,10 +61,10 @@
       };
 
       $.ajax(settings).done(function (response) {
-        // console.log(response);
+        console.log(response);
         socket.send(JSON.stringify(response));
       });
-    }, 1000);
+    }, 5000);
 
   </script>
 </body>
