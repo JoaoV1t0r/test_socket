@@ -23,15 +23,19 @@ final class ChatServer implements MessageComponentInterface
 
   public function onMessage(ConnectionInterface $from, $msg): void
   {
-    $response = json_decode($msg);
+    // $response = json_decode($msg);
+    // foreach ($this->clients as $client) {
+    //   if ($response->code == 0) {
+    //     $status = json_decode($msg);
+    //     $array_robot = json_encode($status->data->state);
+    //     $client->send($array_robot);
+    //   } else {
+    //     $client->send('{"status":"Disconnected"}');
+    //   }
+    // }
+
     foreach ($this->clients as $client) {
-      if ($response->code == 0) {
-        $status = json_decode($msg);
-        $array_robot = json_encode($status->data->state);
-        $client->send($array_robot);
-      } else {
-        $client->send('{"status":"Disconnected"}');
-      }
+      $client->send($msg);
     }
   }
 

@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebSocket Simple Chat</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -28,10 +30,13 @@
     // Ao receber mensagens do servidor
     socket.addEventListener('message', function (event) {
       // Deserializamos o objeto
-      // const data = JSON.parse(event.data);
-      console.log(JSON.parse(event.data))
-      // Escrevemos no DOM
-      // chat.insertAdjacentHTML('beforeend', "<p><b>" + data.nome + " diz: </b>" + data.mensagem + "</p>");
+      const data = JSON.parse(event.data);
+      if (data.code == 1) {
+        console.log(JSON.parse(data.data).data.trays);
+      } else {
+        // Escrevemos no DOM
+        chat.insertAdjacentHTML('beforeend', "<p><b>" + data.nome + " diz: </b>" + data.mensagem + "</p>");
+      }
     });
 
     // Ao enviar uma mensagem
@@ -50,21 +55,33 @@
       }
     });
 
-    setInterval(() => {
-      var settings = {
-        // "url": "http://localhost:9050/api/robot/status?device_id=9762183844642&robot_id=d41243af477c",
-        // "url": "http://localhost:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=5&count=5",
-        "url": "http://189.126.111.242:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=5&count=5",
-        // "url": "http://5.183.11.4:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=2&count=5",
-        "method": "GET",
-        "timeout": 0,
-      };
 
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-        socket.send(JSON.stringify(response));
-      });
-    }, 1000);
+    setInterval(() => {
+      // var settings = {
+      //   // "url": "http://localhost:9050/api/robot/status?device_id=9762183844642&robot_id=d41243af477c",
+      //   // "url": "http://localhost:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=5&count=5",
+      //   //"url": "http://189.126.111.242:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=5&count=5",
+      //   // "url": "http://5.183.11.4:9050/api/robot/state?device_id=9762183844642&group_id=C5X2uUYQSi6pMVOZ_0_5836&timeout=2&count=5",
+      //   "method": "GET",
+      //   "timeout": 0,
+      // };
+
+      $.ajax({
+        type: 'GET',
+        url: `http://localhost:8080`,
+        dataType: 'json',
+        success: dados => {
+          socket.send(JSON.stringify(dados));
+          // socket.send(JSON.stringify(dados));
+        },
+        erro: erro => { console.log(erro) }
+      })
+
+      // $.ajax(settings).done(function (response) {
+      //   console.log(response);
+      //   socket.send(JSON.stringify(response));
+      // });
+    }, 5000);
 
   </script>
 </body>
